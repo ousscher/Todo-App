@@ -1,6 +1,6 @@
 const express = require('express'); 
 const authRouter = require('./routes/auth');
-const postsRouter = require('./routes/posts');
+const postsRouter = require('./routes/tasks');
 const app = express();
 const mongoose = require('mongoose'); 
 const dotenv = require('dotenv');   
