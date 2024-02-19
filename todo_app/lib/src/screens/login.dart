@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:http/http.dart';
 
 class Login extends StatefulWidget {
   Function toogleView;
-  Login({super.key , required this.toogleView});
+  Login({super.key, required this.toogleView});
 
   @override
   State<Login> createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
-  bool _loading = false;
+  bool _loading = false; //to use later
   String _error = "";
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -41,7 +40,7 @@ class _LoginState extends State<Login> {
             TextField(
               controller: _passwordController,
               obscureText: true, // For password fields
-              decoration:const InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Password',
                 hintText: 'Enter your password',
               ),
@@ -50,14 +49,14 @@ class _LoginState extends State<Login> {
             ElevatedButton(
               onPressed: () {
                 if (_usernameController.text.isNotEmpty) {
-                  if (_passwordController.text.isEmpty ) {
+                  if (_passwordController.text.isEmpty) {
                     setState(() {
                       _error = "Empty password";
                     });
                   } else {
                     //here the request
                     setState(() {
-                      _error = ""; 
+                      _error = "";
                     });
                   }
                 } else {
