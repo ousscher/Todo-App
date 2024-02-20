@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+import 'package:todo_app/src/services/auth.dart';
+import 'package:http/http.dart' as http;
 
 class Login extends StatefulWidget {
   Function toogleView;
@@ -14,6 +17,42 @@ class _LoginState extends State<Login> {
   String _error = "";
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  Future<void> _login() async {
+    final String username = _usernameController.text;
+    final String password = _passwordController.text;
+    print(username + "   "+password); 
+
+    // Your login API URL
+    final String apiUrl = 'http://192.168.103.89:3000/api/auth/login';
+
+    try {
+      final response = await http.post(
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        Uri.parse(apiUrl),
+        body: jsonEncode(
+          {
+          'username': username,
+          'password': password,
+        },
+        )
+      );
+
+      if (response.statusCode == 200) {
+        print('Login successful');
+        print(jsonDecode(response.body)['token']);
+      } else {
+        print(response);
+        // Login failed, handle the response accordingly
+        print('Login failed. Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      // An error occurred during the request
+      print('Error during login request: $error');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -47,7 +86,7 @@ class _LoginState extends State<Login> {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (_usernameController.text.isNotEmpty) {
                   if (_passwordController.text.isEmpty) {
                     setState(() {
@@ -58,6 +97,7 @@ class _LoginState extends State<Login> {
                     setState(() {
                       _error = "";
                     });
+                    _login();
                   }
                 } else {
                   setState(() {

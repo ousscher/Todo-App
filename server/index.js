@@ -18,12 +18,12 @@ mongoose.connect(process.env.DB_CONNECT)
 app.use(express.json());
 
 app.use( (req, res, next)=>{
-    console.log(req.method+"  "+req.url);
+    console.log(req.method+"  "+req.url+"   "+req.body);
     next();
 })
 app.use('/api/auth/' ,authRouter );
 app.use('/api/posts/',postsRouter );
 
-app.listen(3000, ()=>{
+app.listen(3000,'0.0.0.0', ()=>{
     console.log("running server on the port 3000");
 }); 
