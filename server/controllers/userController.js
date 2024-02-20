@@ -28,6 +28,8 @@ const singUp = async (req , res)=>{
 
 const singIn = async (req, res)=>{
     const {error} = authValidation(req.body);
+    console.log(req.body.username); 
+    console.log(req.body.password); 
     if (error) return res.status(400).send(error.details[0].message);
     const user = await User.findOne({username:req.body.username}); 
     if (!user) return res.status(400).send({"message":"username  doesn't exist"});
