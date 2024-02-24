@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 
 const singUp = async (req , res)=>{
     const {error} = authValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error) return res.status(400).send({"message" : error.details[0].message});
     const usernameExist = await User.findOne({username:req.body.username}); 
     if (usernameExist) return res.status(400).send({"message":"Username already exists"});
 
@@ -30,12 +30,12 @@ const singIn = async (req, res)=>{
     const {error} = authValidation(req.body);
     console.log(req.body.username); 
     console.log(req.body.password); 
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error) return res.status(400).send({'message': error.details[0].message});   
     const user = await User.findOne({username:req.body.username}); 
-    if (!user) return res.status(400).send({"message":"username  doesn't exist"});
+    if (!user) return res.status(400).send({"message":"Username  doesn't exist"});
     //PASSWORD is correct
     const validPass = await bcrypt.compare(req.body.password, user.password);
-    if (!validPass) return res.status(400).send({"error" : "password wrong, try again"})
+    if (!validPass) return res.status(400).send({"message" : "Password wrong, try again"})
     // return res.status(200).send({"token" : "here we pass the token"});
 
     const token = jwt.sign({_id:user._id} ,process.env.SECRET_KEY); 
