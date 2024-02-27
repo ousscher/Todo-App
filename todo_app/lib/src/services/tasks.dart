@@ -31,11 +31,21 @@ class Tasks {
   }
 
   Future<void> addTask(String task) async {
-    await Future.delayed(Duration(seconds: 2));
   }
 
-  Future<void> deleteTask(String task) async {
-    await Future.delayed(Duration(seconds: 2));
+  Future<void> deleteTask(String taskId) async {
+    final response = await http.delete(
+      Uri.parse('http://$ipAdress:3000/api/tasks/$taskId'),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      print('Task deleted');
+    } else {
+      throw Exception('Failed to delete task');
+    }
+    
   }
 
   Future<void> updateTask(String task) async {
