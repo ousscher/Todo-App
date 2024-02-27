@@ -1,6 +1,6 @@
 const express = require('express'); 
 const authRouter = require('./routes/auth');
-const postsRouter = require('./routes/tasks');
+const tasksRouter = require('./routes/tasks');
 const app = express();
 const mongoose = require('mongoose'); 
 const dotenv = require('dotenv');   
@@ -22,7 +22,7 @@ app.use( (req, res, next)=>{
     next();
 })
 app.use('/api/auth/' ,authRouter );
-app.use('/api/posts/',postsRouter );
+app.use('/api/tasks/',tasksRouter );
 
 app.listen(3000,'0.0.0.0', ()=>{
     console.log("running server on the port 3000");
