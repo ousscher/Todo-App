@@ -20,7 +20,7 @@ class _ShowAllTasksSectionState extends State<ShowAllTasksSection> {
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else {
-          final List<Map<String, dynamic>> tasks = snapshot.data ?? [];
+          List<Map<String, dynamic>> tasks = snapshot.data ?? [];
           return ListView.builder(
             itemCount: tasks.length,
             itemBuilder: (context, index) {
@@ -48,10 +48,13 @@ class _ShowAllTasksSectionState extends State<ShowAllTasksSection> {
                             ),
                             TextButton(
                               onPressed: () async {
-                                // await deleteTask(tasks[index]['_id']!);
-                                setState(() {
+                                print(tasks[index]);
+                                Tasks(token: widget.token).deleteTask(tasks[index]['id']);
+                                setState(() async{
                                   // Reload the tasks after deletion
-                                  // tasks = fetchTasks();
+                                  tasks =  (Tasks(token: widget.token).getTasks()
+                                          as List<Map<String, dynamic>>?) ??
+                                      [];
                                 });
                                 Navigator.of(context).pop();
                               },
