@@ -2,30 +2,17 @@ import 'package:flutter/material.dart';
 import 'allTasks.dart';
 import 'newTask.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'To-Do App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: HomePage(),
-    );
-  }
-}
 
 class HomePage extends StatefulWidget {
+  String token;
+  HomePage({super.key , required this.token});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  bool showAddTask = true;
+  bool showAddTask = false;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +20,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(showAddTask ? 'Add Task' : 'Show All Tasks'),
       ),
-      body: showAddTask ? AddTaskSection() : ShowAllTasksSection(),
+      body: showAddTask ? AddTaskSection() : ShowAllTasksSection(token: widget.token,),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Add your action here

@@ -75,7 +75,7 @@ class _LoginState extends State<Login> {
                             //succes (doing something)
                             Navigator.pushAndRemoveUntil(
                               context,
-                              MaterialPageRoute(builder: (context) => HomePage()),
+                              MaterialPageRoute(builder: (context) => HomePage(token: token,)),
                               (route) => false,
                             );
                             setState(() {
