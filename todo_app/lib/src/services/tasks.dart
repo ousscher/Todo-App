@@ -30,8 +30,7 @@ class Tasks {
     }
   }
 
-  Future<void> addTask(String task) async {
-  }
+  Future<void> addTask(String task) async {}
 
   Future<void> deleteTask(String taskId) async {
     final response = await http.delete(
@@ -45,10 +44,25 @@ class Tasks {
     } else {
       throw Exception('Failed to delete task');
     }
-    
   }
 
-  Future<void> updateTask(String task) async {
-    await Future.delayed(Duration(seconds: 2));
+  Future<void> updateTask(
+      String taskId, String newTitle, String newContent) async {
+    final response = await http.put(
+      Uri.parse('http://$ipAdress:3000/api/tasks/$taskId'),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'title': newTitle,
+        'content': newContent,
+      }),
+    );
+    if (response.statusCode == 200) {
+      print('Task updated');
+    } else {
+      throw Exception('Failed to update task');
+    }
   }
 }
