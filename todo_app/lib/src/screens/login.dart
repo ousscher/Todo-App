@@ -78,9 +78,6 @@ class _LoginState extends State<Login> {
                               MaterialPageRoute(builder: (context) => HomePage(token: token,)),
                               (route) => false,
                             );
-                            setState(() {
-                              _loading = false;
-                            });
                           } catch (error ) {
                             setState(() {
                               _error = error.toString();

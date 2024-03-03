@@ -48,7 +48,6 @@ class Auth {
 
       if (responseSignup.statusCode == 200) {
         print('Signup successful');
-        // Call login after successful signup
         return await login(username, password);
       } else {
         throw Exception('${jsonDecode(responseSignup.body)['message']}');

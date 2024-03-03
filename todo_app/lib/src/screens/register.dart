@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/src/screens/home.dart';
 import 'package:todo_app/src/services/auth.dart';
 import 'package:todo_app/src/shared/loading.dart';
 
@@ -73,15 +74,17 @@ class _RegisterState extends State<Register> {
                               _confirmPasswordController.text) {
                             setState(() {
                               _error = "";
-                              _loading = true;
+                              _loading = true;  
                             });
                             try {
                               String token = await Auth.signupAndLogin(
                                   _usernameController.text,
                                   _passwordController.text);
-                              setState(() {
-                                _loading = false;
-                              });
+                              Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(builder: (context) => HomePage(token: token,)),
+                              (route) => false,
+                            );
                               print(token);
                             } catch (e) {
                               setState(() {

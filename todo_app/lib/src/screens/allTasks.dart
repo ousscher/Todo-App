@@ -21,7 +21,7 @@ class _ShowAllTasksSectionState extends State<ShowAllTasksSection> {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else {
           List<Map<String, dynamic>> tasks = snapshot.data ?? [];
-          return ListView.builder(
+          return (tasks.isNotEmpty)? ListView.builder(
             itemCount: tasks.length,
             itemBuilder: (context, index) {
               return Card(
@@ -69,7 +69,7 @@ class _ShowAllTasksSectionState extends State<ShowAllTasksSection> {
                 ),
               );
             },
-          );
+          ):const Center(child:Text("No tasks found. Add a task to get started."));
         }
       },
     );

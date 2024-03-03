@@ -10,13 +10,15 @@ const addTask = (req, res)=>{
         content: req.body.content,
         userId: userId
     });
+    console.log(req.body.title);
+    console.log(task);
 
     task.save()
     .then(data=>{
         res.json({"message": "Task added successfully!"});
     })
     .catch(err=>{
-        res.json({message: err});
+        res.json({message: err});   
     });
 };
 
@@ -25,7 +27,7 @@ const getAllTasks = async (req, res)=>{
     const userId = jwt.verify(token, process.env.SECRET_KEY)._id;
     const tasks = await Task.find({userId: userId});
     if (tasks.length === 0 || !tasks) {
-        return res.status(404).json({ message: 'No tasks found' });
+        return res.json({ message: 'No tasks found' , tasks: []});
     }
     res.send({tasks: tasks});
 };

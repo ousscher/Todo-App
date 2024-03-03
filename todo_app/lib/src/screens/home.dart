@@ -20,14 +20,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(showAddTask ? 'Add Task' : 'Show All Tasks'),
       ),
-      body: showAddTask ? AddTaskSection() : ShowAllTasksSection(token: widget.token,),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add your action here
-        },
-        child: Icon(Icons.add),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      body: showAddTask ? AddTaskSection(token: widget.token,) : ShowAllTasksSection(token: widget.token,),
       bottomNavigationBar: BottomAppBar(
         shape: CircularNotchedRectangle(),
         notchMargin: 8.0,

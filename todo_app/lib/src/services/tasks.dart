@@ -13,7 +13,6 @@ class Tasks {
       },
     );
     if (response.statusCode == 200) {
-      // If the server returns a 200 OK response, parse the tasks
       final List<dynamic> tasksJson = jsonDecode(response.body)['tasks'];
       final List<Map<String, dynamic>> tasks = tasksJson.map((taskJson) {
         return {
@@ -30,7 +29,25 @@ class Tasks {
     }
   }
 
-  Future<void> addTask(String task) async {}
+  Future<void> addTask(String title, String discription) async {
+    print(title+"    "+ discription);
+    final response = await http.post(
+      Uri.parse('http://$ipAdress:3000/api/tasks/add'),
+      headers: {
+        'Authorization': 'Bearer  $token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'title': title,
+        'content': discription,
+      }),
+    );
+    if (response.statusCode == 200) {
+      print('Task added');
+    } else {
+      throw Exception('Failed to add task');
+    }
+  }
 
   Future<void> deleteTask(String taskId) async {
     final response = await http.delete(
